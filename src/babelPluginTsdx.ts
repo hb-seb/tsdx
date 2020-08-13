@@ -115,7 +115,10 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
             presetEnv.options,
             {
               modules: false,
-              exclude: (presetEnv.options && presetEnv.options.exclude) || [],
+              exclude: merge(
+                ['transform-regenerator'],
+                (presetEnv.options && presetEnv.options.exclude) || []
+              ),
             }
           ),
         ],
@@ -132,6 +135,7 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
           useBuiltIns: 'usage',
           modules: false,
           loose: true,
+          exclude: ['transform-regenerator'],
         },
       ]);
 
