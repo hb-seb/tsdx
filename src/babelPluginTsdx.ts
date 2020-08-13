@@ -110,6 +110,7 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
             {
               loose: true,
               targets: customOptions.targets,
+              useBuiltIns: 'usage',
             },
             presetEnv.options,
             {
@@ -128,6 +129,7 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
         {
           name: '@babel/preset-env',
           targets: customOptions.targets,
+          useBuiltIns: 'usage',
           modules: false,
           loose: true,
         },
