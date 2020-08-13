@@ -59,12 +59,7 @@ export async function createRollupConfig(
     // Tell Rollup the entry point to the package
     input: opts.input,
     // Tell Rollup which packages to ignore
-    external: (id: string) => {
-      if (id === 'babel-plugin-transform-async-to-promises/helpers') {
-        return false;
-      }
-      return external(id);
-    },
+    external: external,
     // Rollup has treeshaking by default, but we can optimize it further...
     treeshake: {
       // We assume reading a property of an object never has side-effects.

@@ -74,11 +74,6 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
           replacements,
         },
         {
-          name: 'babel-plugin-transform-async-to-promises',
-          inlineHelpers: true,
-          externalHelpers: true,
-        },
-        {
           name: '@babel/plugin-proposal-class-properties',
           loose: true,
         },
@@ -88,7 +83,6 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
         { name: '@babel/plugin-proposal-nullish-coalescing-operator' },
         {
           name: '@babel/plugin-transform-regenerator',
-          async: false,
         },
         {
           name: 'babel-plugin-macros',
@@ -120,10 +114,7 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
             presetEnv.options,
             {
               modules: false,
-              exclude: merge(
-                ['transform-async-to-generator', 'transform-regenerator'],
-                (presetEnv.options && presetEnv.options.exclude) || []
-              ),
+              exclude: (presetEnv.options && presetEnv.options.exclude) || [],
             }
           ),
         ],
@@ -139,7 +130,6 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
           targets: customOptions.targets,
           modules: false,
           loose: true,
-          exclude: ['transform-async-to-generator', 'transform-regenerator'],
         },
       ]);
 
