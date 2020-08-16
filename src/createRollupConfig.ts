@@ -120,11 +120,12 @@ export async function createRollupConfig(
         // defaults + .jsx
         extensions: ['.mjs', '.js', '.jsx', '.json', '.node'],
       }),
-      opts.format === 'umd' &&
-        commonjs({
-          // use a regex to make sure to include eventual hoisted packages
-          include: /\/node_modules\//,
-        }),
+      commonjs({
+        // Use a regex to make sure to include eventual hoisted packages (umd).
+        // Always transform core-js, so its internal dependencies are found
+        // by rollup's external() resolution.
+        include: opts.format === 'umd' ? /\/node_modules\// : /core-js\//,
+      }),
       json(),
       {
         // Custom plugin that removes shebang from code because newer
