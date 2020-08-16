@@ -59,7 +59,14 @@ export async function createRollupConfig(
     // Tell Rollup the entry point to the package
     input: opts.input,
     // Tell Rollup which packages to ignore
-    external: external,
+    external: (id: string) => {
+      // bundle in any polyfills as TSDX can't control whether polyfills are installed as deps
+      if (id.startsWith('regenerator-runtime') || id.startsWith('core-js')) {
+        return false;
+      }
+
+      return external(id);
+    },
     // Rollup has treeshaking by default, but we can optimize it further...
     treeshake: {
       // We assume reading a property of an object never has side-effects.
