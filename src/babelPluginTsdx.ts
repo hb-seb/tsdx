@@ -82,9 +82,6 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
         // Adds syntax support for default value using ?? operator
         { name: '@babel/plugin-proposal-nullish-coalescing-operator' },
         {
-          name: '@babel/plugin-transform-regenerator',
-        },
-        {
           name: 'babel-plugin-macros',
         },
         isTruthy(customOptions.extractErrors) && {
@@ -116,10 +113,6 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
             presetEnv.options,
             {
               modules: false,
-              exclude: merge(
-                ['transform-regenerator'],
-                (presetEnv.options && presetEnv.options.exclude) || []
-              ),
             }
           ),
         ],
@@ -137,7 +130,6 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
           corejs: 2,
           modules: false,
           loose: true,
-          exclude: ['transform-regenerator'],
         },
       ]);
 
