@@ -69,9 +69,6 @@ exports.babelPluginTsdx = rollup_plugin_babel_1.default.custom(() => ({
             // Adds syntax support for default value using ?? operator
             { name: '@babel/plugin-proposal-nullish-coalescing-operator' },
             {
-                name: '@babel/plugin-transform-regenerator',
-            },
-            {
                 name: 'babel-plugin-macros',
             },
             exports.isTruthy(customOptions.extractErrors) && {
@@ -93,7 +90,6 @@ exports.babelPluginTsdx = rollup_plugin_babel_1.default.custom(() => ({
                     corejs: 2,
                 }, presetEnv.options, {
                     modules: false,
-                    exclude: lodash_merge_1.default(['transform-regenerator'], (presetEnv.options && presetEnv.options.exclude) || []),
                 }),
             ], {
                 type: `preset`,
@@ -109,7 +105,6 @@ exports.babelPluginTsdx = rollup_plugin_babel_1.default.custom(() => ({
                     corejs: 2,
                     modules: false,
                     loose: true,
-                    exclude: ['transform-regenerator'],
                 },
             ]);
             babelOptions.presets = exports.mergeConfigItems('preset', defaultPresets, babelOptions.presets);

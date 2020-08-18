@@ -42,7 +42,13 @@ async function createRollupConfig(opts, outputNum) {
         // Tell Rollup the entry point to the package
         input: opts.input,
         // Tell Rollup which packages to ignore
-        external: utils_1.external,
+        external: (id) => {
+            // bundle in any polyfills as TSDX can't control whether polyfills are installed as deps
+            if (id.startsWith('regenerator-runtime') || id.startsWith('core-js')) {
+                return false;
+            }
+            return utils_1.external(id);
+        },
         // Rollup has treeshaking by default, but we can optimize it further...
         treeshake: {
             // We assume reading a property of an object never has side-effects.
@@ -96,11 +102,12 @@ async function createRollupConfig(opts, outputNum) {
                 // defaults + .jsx
                 extensions: ['.mjs', '.js', '.jsx', '.json', '.node'],
             }),
-            opts.format === 'umd' &&
-                plugin_commonjs_1.default({
-                    // use a regex to make sure to include eventual hoisted packages
-                    include: /\/node_modules\//,
-                }),
+            plugin_commonjs_1.default({
+                // Use a regex to make sure to include eventual hoisted packages (umd).
+                // Always transform core-js, so its internal dependencies are found
+                // by rollup's external() resolution.
+                include: opts.format === 'umd' ? /\/node_modules\// : /core-js\//,
+            }),
             plugin_json_1.default(),
             {
                 // Custom plugin that removes shebang from code because newer
